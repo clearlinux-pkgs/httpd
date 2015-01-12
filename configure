@@ -1,0 +1,12 @@
+--libdir=/usr/lib
+--sysconfdir=/usr/share/defaults/httpd
+--includedir=/usr/include/httpd
+--libexecdir=/usr/lib/httpd/modules
+--datadir=/usr/share/httpd
+--enable-mpms-shared=all
+--with-apr=/usr/bin/apr-1-config --with-apr-util=/usr/bin
+--enable-pie
+--with-pcre
+--enable-mods-shared=all
+--enable-ssl --with-ssl --disable-distcache
+--disable-imagemap
