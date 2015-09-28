@@ -4,7 +4,7 @@
 #
 Name     : httpd
 Version  : 2.4.16
-Release  : 43
+Release  : 44
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.16.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.16.tar.gz
 Source1  : httpd.service
