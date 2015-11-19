@@ -6,7 +6,19 @@
 --enable-mpms-shared=all
 --with-apr=/usr/bin/apr-1-config --with-apr-util=/usr/bin
 --enable-pie
---with-pcre
---enable-mods-shared=all
+--with-pcre=yes
 --enable-ssl --with-ssl --disable-distcache
 --disable-imagemap
+--enable-layout=Debian
+--enable-so
+--with-program-name=apache2
+--enable-suexec
+--with-suexec-caller=www-data
+--with-suexec-bin=/usr/lib/apache2/suexec
+--with-suexec-docroot=/var/www
+--with-suexec-userdir=public_html
+--with-suexec-logfile=/var/log/apache2/suexec.log
+--with-suexec-uidmin=100 --enable-suexec=shared
+--enable-log-config=static
+--enable-mods-shared="all cgi ident authnz_fcgi"
+--enable-mods-static="unixd logio watchdog version"
