@@ -4,7 +4,7 @@
 #
 Name     : httpd
 Version  : 2.4.18
-Release  : 50
+Release  : 51
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source1  : httpd.service
@@ -103,7 +103,7 @@ lib components for the httpd package.
 --libexecdir=/usr/lib/httpd/modules \
 --datadir=/usr/share/httpd \
 --enable-mpms-shared=all \
---with-apr=/usr/bin/apr-1-config --with-apr-util=/usr/bin \
+--with-apr=/usr/bin/apr-1-config --with-apr-util=/usr/bin --with-mpm=worker \
 --enable-pie \
 --with-pcre \
 --enable-mods-shared=all \
