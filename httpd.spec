@@ -103,7 +103,7 @@ lib components for the httpd package.
 --libexecdir=/usr/lib/httpd/modules \
 --datadir=/usr/share/httpd \
 --enable-mpms-shared=all \
---with-apr=/usr/bin/apr-1-config --with-apr-util=/usr/bin --with-mpm=worker \
+--with-apr=/usr/bin/apr-1-config --with-apr-util=/usr/bin \
 --enable-pie \
 --with-pcre \
 --enable-mods-shared=all \
