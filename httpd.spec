@@ -4,7 +4,7 @@
 #
 Name     : httpd
 Version  : 2.4.18
-Release  : 54
+Release  : 55
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source1  : httpd.service
@@ -108,7 +108,7 @@ lib components for the httpd package.
 --with-pcre \
 --enable-mods-shared=all \
 --enable-ssl --with-ssl --disable-distcache \
---disable-imagemap
+--disable-imagemap AR="gcc-ar" NM="gcc-nm" RANLIB="gcc-ranlib"
 make V=1  %{?_smp_mflags}
 
 %install
