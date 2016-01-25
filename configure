@@ -9,4 +9,4 @@
 --with-pcre
 --enable-mods-shared=all
 --enable-ssl --with-ssl --disable-distcache
---disable-imagemap
+--disable-imagemap AR="gcc-ar" NM="gcc-nm" RANLIB="gcc-ranlib"
