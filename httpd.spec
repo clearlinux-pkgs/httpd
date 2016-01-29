@@ -4,7 +4,7 @@
 #
 Name     : httpd
 Version  : 2.4.18
-Release  : 56
+Release  : 57
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source1  : httpd.service
@@ -97,6 +97,11 @@ lib components for the httpd package.
 %patch3 -p1
 
 %build
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -flto -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -flto -fno-semantic-interposition "
 %configure --disable-static --libdir=/usr/lib \
 --sysconfdir=/usr/share/defaults/httpd \
 --includedir=/usr/include/httpd \
