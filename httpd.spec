@@ -4,7 +4,7 @@
 #
 Name     : httpd
 Version  : 2.4.18
-Release  : 59
+Release  : 60
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source1  : httpd.service
@@ -116,7 +116,9 @@ export CXXFLAGS="$CXXFLAGS -O3 -flto -falign-functions=32 -fno-semantic-interpos
 --disable-imagemap AR="gcc-ar" NM="gcc-nm" RANLIB="gcc-ranlib" \
 --enable-cache \
 --enable-disk-cache \
---enable-distcache
+--enable-distcache \
+--enable-worker=static \
+--with-mpm=worker
 make V=1  %{?_smp_mflags}
 
 %install
