@@ -13,3 +13,5 @@
 --enable-cache
 --enable-disk-cache
 --enable-distcache
+--enable-worker=static
+--with-mpm=worker
