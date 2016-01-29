@@ -10,3 +10,5 @@
 --enable-mods-shared=all
 --enable-ssl --with-ssl --disable-distcache
 --disable-imagemap AR="gcc-ar" NM="gcc-nm" RANLIB="gcc-ranlib"
+--enable-cache
+--enable-disk-cache
