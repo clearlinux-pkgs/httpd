@@ -12,3 +12,4 @@
 --disable-imagemap AR="gcc-ar" NM="gcc-nm" RANLIB="gcc-ranlib"
 --enable-cache
 --enable-disk-cache
+--enable-distcache
