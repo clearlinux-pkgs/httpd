@@ -163,9 +163,7 @@ popd
 for f in %{mpms}; do
 	install -m 755 ${f}/httpd %{buildroot}%{pprefix}/httpd.${f}
 done
-
 install -m 755 event/httpd %{buildroot}%{pprefix}/httpd
-
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/httpd.service
