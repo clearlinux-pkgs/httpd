@@ -8,7 +8,7 @@
 %define mpms worker event
 Name     : httpd
 Version  : 2.4.18
-Release  : 51
+Release  : 52
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source1  : httpd.service
