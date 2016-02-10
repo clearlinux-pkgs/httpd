@@ -5,10 +5,10 @@
 %define pincludedir /usr/include/httpd
 %define pmandir /usr/share/man
 %define suexec_caller apache
-%define mpms worker event
+%define mpms worker prefork
 Name     : httpd
 Version  : 2.4.18
-Release  : 52
+Release  : 60
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source1  : httpd.service
@@ -111,6 +111,8 @@ mpm=$1; shift
 mkdir $mpm; pushd $mpm
 ../configure \
 	--prefix=%{pprefix} \
+	--bindir=%{pprefix} \
+	--sbindir=%{pprefix} \
 	--libdir=%{plibdir} \
 	--sysconfdir=%{psysconfdir} \
 	--includedir=%{pincludedir} \
@@ -122,11 +124,13 @@ mkdir $mpm; pushd $mpm
 	--with-apr=%{pprefix}/apr-1-config --with-apr-util=%{pprefix} \
 	--enable-suexec --with-suexec \
 	--with-suexec-caller=%{suexec_caller} \
+	--enable-fcgid \
 	--with-suexec-docroot=%{contentdir} \
 	--with-suexec-logfile=%{_localstatedir}/log/httpd/suexec.log \
 	--with-suexec-bin=%{_sbindir}/suexec \
 	--with-suexec-uidmin=500 --with-suexec-gidmin=100 \
 	--enable-pie \
+	--enable-mods-shared=all \
 	--with-pcre \
 	$*
 
@@ -137,33 +141,29 @@ popd
 # Build everything and the kitchen sink with the prefork build
 mpmbuild prefork \
 	--enable-ssl \
-	--enable-mods-shared=all \
 	--with-ssl \
 	--enable-distcache \
 	--enable-proxy \
 	--enable-cache \
 	--enable-disk-cache \
-	--enable-cgid \
 	--enable-authn-anon --enable-authn-alias \
 	--disable-imagemap
 
 # For the other MPMs, just build httpd and no optional modules
-for f in %{mpms}; do
-	mpmbuild $f --enable-modules=none
-done
+mpmbuild worker
+mpmbuild event
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-pushd prefork
-make DESTDIR=$RPM_BUILD_ROOT install
+pushd event
+make DESTDIR=%{buildroot} install
 popd
 
 # install alternative MPMs
 for f in %{mpms}; do
 	install -m 755 ${f}/httpd %{buildroot}%{pprefix}/httpd.${f}
 done
-install -m 755 event/httpd %{buildroot}%{pprefix}/httpd
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/httpd.service
