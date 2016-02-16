@@ -176,6 +176,8 @@ install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/tmpfiles.d/httpd.conf
 
 %files bin
 %defattr(-,root,root,-)
+%exclude /usr/bin/envvars
+%exclude /usr/bin/envvars-std
 %{pprefix}/*
 
 %files config
