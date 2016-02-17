@@ -1,10 +1,3 @@
-%define pprefix /usr/bin
-%define plibdir /usr/lib
-%define pcontentdir /usr/share/httpd
-%define psysconfdir /usr/share/defaults/httpd
-%define pincludedir /usr/include/httpd
-%define pmandir /usr/share/man
-%define suexec_caller apache
 %define mpms worker prefork
 Name     : httpd
 Version  : 2.4.18
@@ -110,25 +103,16 @@ function mpmbuild()
 mpm=$1; shift
 mkdir $mpm; pushd $mpm
 ../configure \
-	--prefix=%{pprefix} \
-	--bindir=%{pprefix} \
-	--sbindir=%{pprefix} \
-	--libdir=%{plibdir} \
-	--sysconfdir=%{psysconfdir} \
-	--includedir=%{pincludedir} \
-	--libexecdir=%{plibdir}/httpd/modules \
-	--datadir=%{pcontentdir} \
-	--mandir=%{pmandir} \
-	--with-installbuilddir=%{plibdir}/httpd/build \
+	--prefix=%{_prefix} \
+	--sysconfdir=/usr/share/defaults/httpd \
+	--mandir=%{_mandir} \
+	--datadir=%{_datadir}/httpd \
+	--includedir=%{_includedir}/httpd \
+	--libdir=%{_prefix}/lib \
+	--libexecdir=%{_prefix}/lib/httpd/modules \
+	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin \
 	--with-mpm=$mpm \
-	--with-apr=%{pprefix}/apr-1-config --with-apr-util=%{pprefix} \
-	--enable-suexec --with-suexec \
-	--with-suexec-caller=%{suexec_caller} \
 	--enable-fcgid \
-	--with-suexec-docroot=%{contentdir} \
-	--with-suexec-logfile=%{_localstatedir}/log/httpd/suexec.log \
-	--with-suexec-bin=%{_sbindir}/suexec \
-	--with-suexec-uidmin=500 --with-suexec-gidmin=100 \
 	--enable-pie \
 	--enable-mods-shared=all \
 	--with-pcre \
@@ -162,7 +146,7 @@ popd
 
 # install alternative MPMs
 for f in %{mpms}; do
-	install -m 755 ${f}/httpd %{buildroot}%{pprefix}/httpd.${f}
+	install -m 755 ${f}/httpd %{buildroot}%{_bindir}/httpd.${f}
 done
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
@@ -172,33 +156,33 @@ install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/tmpfiles.d/httpd.conf
 
 %files
 %defattr(-,root,root,-)
-%{plibdir}/httpd/modules/httpd.exp
+%{_prefix}/lib/httpd/modules/httpd.exp
 
 %files bin
 %defattr(-,root,root,-)
 %exclude /usr/bin/envvars
 %exclude /usr/bin/envvars-std
-%{pprefix}/*
+/usr/bin/*
 
 %files config
 %defattr(-,root,root,-)
-%{plibdir}/systemd/system/httpd.service
-%{plibdir}/tmpfiles.d/httpd.conf
+%{_prefix}/lib/systemd/system/httpd.service
+%{_prefix}/lib/tmpfiles.d/httpd.conf
 
 %files data
 %defattr(-,root,root,-)
-%{psysconfdir}/*
-%{pcontentdir}/*
+/usr/share/defaults/httpd/*
+/usr/share/httpd/*
 
 %files dev
 %defattr(-,root,root,-)
-%{pincludedir}/*.h
+%{_prefix}/include/httpd/*.h
 
 %files doc
 %defattr(-,root,root,-)
-%doc %{pmandir}/man1/*
-%doc %{pmandir}/man8/*
+%doc /usr/share/man/man1/*
+%doc /usr/share/man/man8/*
 
 %files lib
 %defattr(-,root,root,-)
-%{plibdir}/httpd/modules/mod*.so
+%{_prefix}/lib/httpd/modules/mod*.so
