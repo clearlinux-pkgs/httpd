@@ -1,4 +1,4 @@
-%define mpms worker prefork
+%define mpms worker
 Name     : httpd
 Version  : 2.4.18
 Release  : 63
@@ -25,6 +25,7 @@ BuildRequires : util-linux-dev
 Patch1: 0001-default-config.patch
 Patch2: 0002-do-not-crash-when-IncludeOptional-dir-is-not-existent.patch
 Patch3: 0003-Look-fo-envvars-in-etc-httpd.patch
+Patch4: 0004-pgo-task.patch
 
 %description
 Apache is a powerful, full-featured, efficient, and freely-available
@@ -84,12 +85,35 @@ Requires: httpd-config
 %description lib
 lib components for the httpd package.
 
-
 %prep
 %setup -q -n httpd-2.4.18
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+
+# build a temporal httpd with pgo generation enabled
+mkdir tmp; pushd tmp
+../configure \
+	--prefix=%{buildroot}%{_prefix} \
+	--with-mpm=event \
+	--enable-mods-shared=all \
+	--enable-fcgid \
+	--enable-pie \
+	--with-pcre=yes \
+	--with-port=8088 \
+	--enable-unixd=static \
+	--enable-ssl=static \
+	--enable-cgid \
+	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin
+
+make enable-pgo-flags V=1 %{?_smp_mflags}
+make DESTDIR=%{buildroot} install
+ln -s %{buildroot}%{buildroot}%{_prefix} %{buildroot}%{_prefix}
+make DESTDIR=%{buildroot} pgo-generate
+popd
+
+rm -rf tmp
 
 %build
 # forcibly prevent use of bundled apr, apr-util, pcre
@@ -98,6 +122,7 @@ rm -rf srclib/{apr,apr-util,pcre}
 # regenerate configure scripts
 autoheader && autoconf || exit 1
 
+#configure and make using pgo profiles generated previously
 function mpmbuild()
 {
 mpm=$1; shift
@@ -115,12 +140,13 @@ mkdir $mpm; pushd $mpm
 	--enable-fcgid \
 	--enable-pie \
 	--enable-mods-shared=all \
-	--with-pcre \
+	--enable-unixd=static \
+	--with-pcre=yes \
 	$*
-
-make V=1 %{?_smp_mflags}
+make pgo-use-profile V=1 %{?_smp_mflags}
 popd
 }
+
 
 # Build everything and the kitchen sink with the prefork build
 mpmbuild prefork \
@@ -134,14 +160,14 @@ mpmbuild prefork \
 	--disable-imagemap
 
 # For the other MPMs, just build httpd and no optional modules
-mpmbuild worker
 mpmbuild event
+mpmbuild worker
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 pushd event
-make DESTDIR=%{buildroot} install
+	make DESTDIR=%{buildroot} install
 popd
 
 # install alternative MPMs
