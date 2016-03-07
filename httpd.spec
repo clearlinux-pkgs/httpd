@@ -1,4 +1,4 @@
-%define mpms worker
+%define mpms worker prefork
 Name     : httpd
 Version  : 2.4.18
 Release  : 64
@@ -102,9 +102,6 @@ mkdir tmp; pushd tmp
 	--enable-pie \
 	--with-pcre=yes \
 	--with-port=8088 \
-	--enable-unixd=static \
-	--enable-ssl=static \
-	--enable-cgid \
 	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin
 
 make enable-pgo-flags V=1 %{?_smp_mflags}
@@ -113,6 +110,8 @@ ln -s %{buildroot}%{buildroot}%{_prefix} %{buildroot}%{_prefix}
 make DESTDIR=%{buildroot} pgo-generate
 popd
 
+rm -rf %{buildroot}%{buildroot}
+rm -rf %{buildroot}%{_prefix}
 rm -rf tmp
 
 %build
@@ -138,9 +137,7 @@ mkdir $mpm; pushd $mpm
 	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin \
 	--with-mpm=$mpm \
 	--enable-fcgid \
-	--enable-pie \
-	--enable-mods-shared=all \
-	--enable-unixd=static \
+	--enable-mods-shared="all authz_core auth_basic access_compat alias autoindex dir env filter headers mime reqtimeout status setenvif unixd pie fcgi" \
 	--with-pcre=yes \
 	$*
 make pgo-use-profile V=1 %{?_smp_mflags}
@@ -167,7 +164,7 @@ mpmbuild worker
 rm -rf $RPM_BUILD_ROOT
 
 pushd event
-	make DESTDIR=%{buildroot} install
+make DESTDIR=%{buildroot} install
 popd
 
 # install alternative MPMs
