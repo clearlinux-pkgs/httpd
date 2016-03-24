@@ -1,7 +1,7 @@
 %define mpms worker prefork
 Name     : httpd
 Version  : 2.4.18
-Release  : 65
+Release  : 66
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
 Source1  : httpd.service
@@ -26,6 +26,7 @@ Patch1: 0001-default-config.patch
 Patch2: 0002-do-not-crash-when-IncludeOptional-dir-is-not-existent.patch
 Patch3: 0003-Look-fo-envvars-in-etc-httpd.patch
 Patch4: 0004-pgo-task.patch
+Patch5: wakeups.patch
 
 %description
 Apache is a powerful, full-featured, efficient, and freely-available
@@ -91,6 +92,12 @@ lib components for the httpd package.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export CFLAGS="$CFLAGS -flto -ffunction-sections -fno-semantic-interposition -O3 -falign-functions=32 -falign-loops=32"
+export CXXFLAGS="$CXXFLAGS -flto -ffunction-sections -fno-semantic-interposition -O3 "
 
 # build a temporal httpd with pgo generation enabled
 mkdir tmp; pushd tmp
@@ -120,6 +127,11 @@ rm -rf srclib/{apr,apr-util,pcre}
 
 # regenerate configure scripts
 autoheader && autoconf || exit 1
+
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export CFLAGS="$CFLAGS -flto -ffunction-sections -fno-semantic-interposition -O3 -falign-functions=32 -falign-loops=32"
+export CXXFLAGS="$CXXFLAGS -flto -ffunction-sections -fno-semantic-interposition -O3 "
 
 #configure and make using pgo profiles generated previously
 function mpmbuild()
