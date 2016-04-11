@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.18
+Version  : 2.4.20
 Release  : 66
-URL      : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
-Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.18.tar.gz
+URL      : http://download.nextag.com/apache//httpd/httpd-2.4.20.tar.gz
+Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.20.tar.gz
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Summary  : Apache HTTP Server
@@ -87,7 +87,7 @@ Requires: httpd-config
 lib components for the httpd package.
 
 %prep
-%setup -q -n httpd-2.4.18
+%setup -q -n httpd-2.4.20
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
