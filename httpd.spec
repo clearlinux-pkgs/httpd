@@ -23,7 +23,6 @@ BuildRequires : pcre
 BuildRequires : pcre-dev
 BuildRequires : util-linux-dev
 BuildRequires : zlib-dev
-BuildRequires : libxml2-dev
 Patch1: 0001-default-config.patch
 Patch2: 0002-do-not-crash-when-IncludeOptional-dir-is-not-existent.patch
 Patch3: 0003-Look-fo-envvars-in-etc-httpd.patch
