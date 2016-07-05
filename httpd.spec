@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.20
+Version  : 2.4.23
 Release  : 68
-URL      : http://download.nextag.com/apache//httpd/httpd-2.4.20.tar.gz
-Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.20.tar.gz
+URL      : http://download.nextag.com/apache//httpd/httpd-2.4.23.tar.gz
+Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.23.tar.gz
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Summary  : Apache HTTP Server
@@ -22,6 +22,8 @@ BuildRequires : openssl-dev
 BuildRequires : pcre
 BuildRequires : pcre-dev
 BuildRequires : util-linux-dev
+BuildRequires : zlib-dev
+BuildRequires : libxml2-dev
 Patch1: 0001-default-config.patch
 Patch2: 0002-do-not-crash-when-IncludeOptional-dir-is-not-existent.patch
 Patch3: 0003-Look-fo-envvars-in-etc-httpd.patch
@@ -87,7 +89,7 @@ Requires: httpd-config
 lib components for the httpd package.
 
 %prep
-%setup -q -n httpd-2.4.20
+%setup -q -n httpd-2.4.23
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
