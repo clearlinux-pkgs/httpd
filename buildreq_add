@@ -6,3 +6,4 @@ openssl-dev
 pcre
 pcre-dev
 util-linux-dev
+nghttp2-dev

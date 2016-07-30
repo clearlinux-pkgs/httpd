@@ -23,6 +23,8 @@ BuildRequires : pcre
 BuildRequires : pcre-dev
 BuildRequires : util-linux-dev
 BuildRequires : zlib-dev
+BuildRequires : nghttp2-dev
+
 Patch1: 0001-default-config.patch
 Patch2: 0002-do-not-crash-when-IncludeOptional-dir-is-not-existent.patch
 Patch3: 0003-Look-fo-envvars-in-etc-httpd.patch
@@ -152,6 +154,7 @@ mkdir $mpm; pushd $mpm
 	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin \
 	--with-mpm=$mpm \
 	--enable-fcgid \
+	--enable-http2 \
 	--enable-mods-shared="all authz_core auth_basic access_compat alias autoindex dir env filter headers mime reqtimeout status setenvif unixd pie fcgi" \
 	--with-pcre=yes \
 	$*
@@ -168,6 +171,7 @@ mpmbuild prefork \
 	--enable-proxy \
 	--enable-cache \
 	--enable-disk-cache \
+	--enable-http2 \
 	--enable-authn-anon --enable-authn-alias \
 	--disable-imagemap
 

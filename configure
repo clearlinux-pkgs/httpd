@@ -15,3 +15,4 @@
 --enable-distcache
 --enable-worker=static
 --with-mpm=worker
+--enable-http2
