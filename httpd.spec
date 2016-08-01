@@ -1,7 +1,7 @@
 %define mpms worker prefork
 Name     : httpd
 Version  : 2.4.23
-Release  : 73
+Release  : 74
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.23.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.23.tar.gz
 Source1  : httpd.service
@@ -112,6 +112,7 @@ mkdir tmp; pushd tmp
 	--enable-mods-shared=all \
 	--enable-fcgid \
 	--enable-pie \
+	--enable-http2 \
 	--with-pcre=yes \
 	--with-port=8088 \
 	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin
@@ -153,11 +154,13 @@ mkdir $mpm; pushd $mpm
 	--libexecdir=%{_prefix}/lib/httpd/modules \
 	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin \
 	--with-mpm=$mpm \
+	--enable-so \
 	--enable-fcgid \
 	--enable-http2 \
-	--enable-mods-shared="all authz_core auth_basic access_compat alias autoindex dir env filter headers mime reqtimeout status setenvif unixd pie fcgi" \
+	--enable-mods-shared="all authz_core auth_basic access_compat alias autoindex dir env filter headers mime reqtimeout status setenvif unixd pie fcgi http2" \
 	--with-pcre=yes \
-	$*
+	$* \
+	ENABLED_DSO_MODULES="http2"
 make pgo-use-profile V=1 %{?_smp_mflags}
 popd
 }
