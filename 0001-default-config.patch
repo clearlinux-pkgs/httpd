@@ -1,17 +1,27 @@
-From 0ae58342c6e6b6501649958f588f0eff3ad7e35f Mon Sep 17 00:00:00 2001
-From: Alberto Murillo <alberto.murillo.silva@intel.com>
-Date: Wed, 29 Apr 2015 17:26:28 -0500
-Subject: [PATCH] default-config
+From edf937e16e3dd6a7720656f456e9cb2bc303155d Mon Sep 17 00:00:00 2001
+From: "Munoz, Obed N" <obed.n.munoz@intel.com>
+Date: Mon, 1 Aug 2016 11:13:01 -0500
+Subject: [PATCH] default config
 
+Signed-off-by: Munoz, Obed N <obed.n.munoz@intel.com>
 ---
- docs/conf/httpd.conf.in | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ docs/conf/httpd.conf.in | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
 diff --git a/docs/conf/httpd.conf.in b/docs/conf/httpd.conf.in
-index 6e41891..2189511 100644
+index 966d2c3..113854d 100644
 --- a/docs/conf/httpd.conf.in
 +++ b/docs/conf/httpd.conf.in
-@@ -74,8 +74,8 @@ Listen @@Port@@
+@@ -65,6 +65,8 @@ Listen @@Port@@
+ #
+ @@LoadModule@@
+ 
++Protocols h2 h2c http/1.1
++
+ <IfModule unixd_module>
+ #
+ # If you wish httpd to run as a different user or group, you must run
+@@ -74,8 +76,8 @@ Listen @@Port@@
  # It is usually good practice to create a dedicated user and group for
  # running httpd, as with most system services.
  #
@@ -22,7 +32,7 @@ index 6e41891..2189511 100644
  
  </IfModule>
  
-@@ -181,7 +181,7 @@ DocumentRoot "@exp_htdocsdir@"
+@@ -181,7 +183,7 @@ DocumentRoot "@exp_htdocsdir@"
  # logged here.  If you *do* define an error logfile for a <VirtualHost>
  # container, that host's errors will be logged there and not here.
  #
@@ -31,7 +41,7 @@ index 6e41891..2189511 100644
  
  #
  # LogLevel: Control the number of messages logged to the error_log.
-@@ -210,13 +210,13 @@ LogLevel warn
+@@ -210,13 +212,13 @@ LogLevel warn
      # define per-<VirtualHost> access logfiles, transactions will be
      # logged therein and *not* in this file.
      #
@@ -47,9 +57,9 @@ index 6e41891..2189511 100644
  </IfModule>
  
  <IfModule alias_module>
-@@ -418,3 +418,10 @@ SSLRandomSeed connect builtin
- #RequestHeader unset DNT env=bad_DNT
- #</IfModule>
+@@ -407,3 +409,10 @@ SSLRandomSeed startup builtin
+ SSLRandomSeed connect builtin
+ </IfModule>
  
 +# Virtual hosts
 +IncludeOptional /usr/share/defaults/httpd/conf.d/*.conf
@@ -59,5 +69,5 @@ index 6e41891..2189511 100644
 +
 +PidFile /run/httpd/httpd.pid
 -- 
-2.1.0
+2.9.0
 
