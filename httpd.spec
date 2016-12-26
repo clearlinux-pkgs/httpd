@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.23
+Version  : 2.4.25
 Release  : 75
-URL      : http://download.nextag.com/apache//httpd/httpd-2.4.23.tar.gz
-Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.23.tar.gz
+URL      : http://download.nextag.com/apache//httpd/httpd-2.4.25.tar.gz
+Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.25.tar.gz
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Summary  : Apache HTTP Server
@@ -30,7 +30,6 @@ Patch2: 0002-do-not-crash-when-IncludeOptional-dir-is-not-existent.patch
 Patch3: 0003-Look-fo-envvars-in-etc-httpd.patch
 Patch4: 0004-pgo-task.patch
 Patch5: wakeups.patch
-Patch6: cve-2016-5387.patch
 
 %description
 Apache is a powerful, full-featured, efficient, and freely-available
@@ -91,13 +90,12 @@ Requires: httpd-config
 lib components for the httpd package.
 
 %prep
-%setup -q -n httpd-2.4.23
+%setup -q -n httpd-2.4.25
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
