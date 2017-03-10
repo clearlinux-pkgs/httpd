@@ -6,6 +6,7 @@ URL      : http://download.nextag.com/apache//httpd/httpd-2.4.25.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.25.tar.gz
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
+Source3  : systemd.conf
 Summary  : Apache HTTP Server
 Group    : Development/Tools
 License  : Apache-2.0
@@ -24,12 +25,15 @@ BuildRequires : pcre-dev
 BuildRequires : util-linux-dev
 BuildRequires : zlib-dev
 BuildRequires : nghttp2-dev
+BuildRequires : systemd-dev
 
 Patch1: 0001-default-config.patch
 Patch2: 0002-do-not-crash-when-IncludeOptional-dir-is-not-existent.patch
 Patch3: 0003-Look-fo-envvars-in-etc-httpd.patch
 Patch4: 0004-pgo-task.patch
 Patch5: wakeups.patch
+Patch6: detect-systemd.patch
+Patch7: mod_systemd.patch
 
 %description
 Apache is a powerful, full-featured, efficient, and freely-available
@@ -96,6 +100,8 @@ lib components for the httpd package.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -196,6 +202,8 @@ mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/httpd.service
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/tmpfiles.d/httpd.conf
+mkdir -p %{buildroot}/usr/share/defaults/httpd/conf.modules.d
+install -m 0644 %{SOURCE3} %{buildroot}/usr/share/defaults/httpd/conf.modules.d/systemd.conf
 
 %files
 %defattr(-,root,root,-)
