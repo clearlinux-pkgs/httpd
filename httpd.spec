@@ -1,7 +1,7 @@
 %define mpms worker prefork
 Name     : httpd
 Version  : 2.4.25
-Release  : 78
+Release  : 79
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.25.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.25.tar.gz
 Source1  : httpd.service
@@ -64,6 +64,13 @@ Group: Data
 
 %description data
 data components for the httpd package.
+
+%package extras
+Summary: extra components for the httpd package.
+Group: Data
+
+%description extras
+extra components for the httpd package.
 
 
 %package dev
@@ -214,6 +221,13 @@ install -m 0644 %{SOURCE3} %{buildroot}/usr/share/defaults/httpd/conf.modules.d/
 %exclude /usr/bin/envvars
 %exclude /usr/bin/envvars-std
 /usr/bin/*
+%exclude /usr/bin/apxs
+%exclude /usr/bin/dbmmanage
+
+%files extras
+%defattr(-,root,root,-)
+/usr/bin/apxs
+/usr/bin/dbmmanage
 
 %files config
 %defattr(-,root,root,-)
