@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.25
+Version  : 2.4.26
 Release  : 83
-URL      : http://download.nextag.com/apache//httpd/httpd-2.4.25.tar.gz
-Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.25.tar.gz
+URL      : http://download.nextag.com/apache//httpd/httpd-2.4.26.tar.gz
+Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.26.tar.gz
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Source3  : systemd.conf
@@ -101,7 +101,7 @@ Requires: httpd-config
 lib components for the httpd package.
 
 %prep
-%setup -q -n httpd-2.4.25
+%setup -q -n httpd-2.4.26
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -111,9 +111,10 @@ lib components for the httpd package.
 %patch7 -p1
 
 export AR=gcc-ar
+export NM=gcc-nm
 export RANLIB=gcc-ranlib
-export CFLAGS="$CFLAGS -flto -ffunction-sections -fno-semantic-interposition -O3 -falign-functions=32 -falign-loops=32"
-export CXXFLAGS="$CXXFLAGS -flto -ffunction-sections -fno-semantic-interposition -O3 "
+export CFLAGS="$CFLAGS  -ffat-lto-objects -flto -ffunction-sections -fno-semantic-interposition -O3 -falign-functions=16 -falign-loops=16"
+export CXXFLAGS="$CXXFLAGS  -ffat-lto-objects -flto -ffunction-sections -fno-semantic-interposition -O3 "
 
 # build a temporal httpd with pgo generation enabled
 mkdir tmp; pushd tmp
@@ -147,8 +148,8 @@ autoheader && autoconf || exit 1
 
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
-export CFLAGS="$CFLAGS -flto -ffunction-sections -fno-semantic-interposition -O3 -falign-functions=32 -falign-loops=32"
-export CXXFLAGS="$CXXFLAGS -flto -ffunction-sections -fno-semantic-interposition -O3 "
+export CFLAGS="$CFLAGS -ffat-lto-objects -flto -ffunction-sections -fno-semantic-interposition -O3 -falign-functions=16 -falign-loops=16"
+export CXXFLAGS="$CXXFLAGS -ffat-lto-objects -flto -ffunction-sections -fno-semantic-interposition -O3 "
 
 #configure and make using pgo profiles generated previously
 function mpmbuild()
