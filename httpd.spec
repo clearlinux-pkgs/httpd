@@ -1,7 +1,7 @@
 %define mpms worker prefork
 Name     : httpd
 Version  : 2.4.27
-Release  : 83
+Release  : 84
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.27.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.27.tar.gz
 Source1  : httpd.service
@@ -237,6 +237,10 @@ install -m 0644 %{SOURCE3} %{buildroot}/usr/share/defaults/httpd/conf.modules.d/
 
 %files data
 %defattr(-,root,root,-)
+%exclude /usr/share/defaults/httpd/original
+%exclude /usr/share/defaults/httpd/original/httpd.conf
+%exclude /usr/share/defaults/httpd/original/extra
+%exclude /usr/share/defaults/httpd/original/extra/*
 /usr/share/defaults/httpd/*
 /usr/share/httpd/*
 
