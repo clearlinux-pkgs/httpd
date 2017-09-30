@@ -34,6 +34,7 @@ Patch4: 0004-pgo-task.patch
 Patch5: wakeups.patch
 Patch6: detect-systemd.patch
 Patch7: mod_systemd.patch
+Patch8: cve-2017-9798.patch
 
 %description
 Apache is a powerful, full-featured, efficient, and freely-available
@@ -109,6 +110,7 @@ lib components for the httpd package.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 export AR=gcc-ar
 export NM=gcc-nm
