@@ -1,7 +1,7 @@
 %define mpms worker prefork
 Name     : httpd
 Version  : 2.4.28
-Release  : 85
+Release  : 86
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.28.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.28.tar.gz
 Source1  : httpd.service
@@ -34,6 +34,7 @@ Patch4: 0004-pgo-task.patch
 Patch5: wakeups.patch
 Patch6: detect-systemd.patch
 Patch7: mod_systemd.patch
+Patch8: 0008-Move-var-www-htdocs-to-var-www-html-to-unify-with-ng.patch
 
 %description
 Apache is a powerful, full-featured, efficient, and freely-available
@@ -109,6 +110,7 @@ lib components for the httpd package.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 export AR=gcc-ar
 export NM=gcc-nm
@@ -160,7 +162,7 @@ mkdir $mpm; pushd $mpm
 	--prefix=%{_prefix} \
 	--sysconfdir=/usr/share/defaults/httpd \
 	--mandir=%{_mandir} \
-	--datadir=%{_datadir}/httpd \
+	--datadir=/var/www \
 	--includedir=%{_includedir}/httpd \
 	--libdir=%{_prefix}/lib \
 	--libexecdir=%{_prefix}/lib/httpd/modules \
@@ -212,6 +214,9 @@ mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/tmpfiles.d/httpd.conf
 mkdir -p %{buildroot}/usr/share/defaults/httpd/conf.modules.d
 install -m 0644 %{SOURCE3} %{buildroot}/usr/share/defaults/httpd/conf.modules.d/systemd.conf
+
+# move webroot stuff out of /var, we'll set it up with webroot-setup.service
+mv %{buildroot}/var/www %{buildroot}/usr/share/httpd
 
 %files
 %defattr(-,root,root,-)

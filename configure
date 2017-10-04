@@ -2,7 +2,7 @@
 --sysconfdir=/usr/share/defaults/httpd
 --includedir=/usr/include/httpd
 --libexecdir=/usr/lib/httpd/modules
---datadir=/usr/share/httpd
+--datadir=/var/www
 --enable-mpms-shared=all
 --with-apr=/usr/bin/apr-1-config --with-apr-util=/usr/bin
 --enable-pie
