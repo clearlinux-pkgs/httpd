@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.27
+Version  : 2.4.28
 Release  : 85
-URL      : http://download.nextag.com/apache//httpd/httpd-2.4.27.tar.gz
-Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.27.tar.gz
+URL      : http://download.nextag.com/apache//httpd/httpd-2.4.28.tar.gz
+Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.28.tar.gz
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Source3  : systemd.conf
@@ -34,7 +34,6 @@ Patch4: 0004-pgo-task.patch
 Patch5: wakeups.patch
 Patch6: detect-systemd.patch
 Patch7: mod_systemd.patch
-Patch8: cve-2017-9798.patch
 
 %description
 Apache is a powerful, full-featured, efficient, and freely-available
@@ -102,7 +101,7 @@ Requires: httpd-config
 lib components for the httpd package.
 
 %prep
-%setup -q -n httpd-2.4.27
+%setup -q -n httpd-2.4.28
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -110,13 +109,12 @@ lib components for the httpd package.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 
 export AR=gcc-ar
 export NM=gcc-nm
 export RANLIB=gcc-ranlib
-export CFLAGS="$CFLAGS  -ffat-lto-objects -flto -ffunction-sections -fno-semantic-interposition -O3 -falign-functions=16 -falign-loops=16"
-export CXXFLAGS="$CXXFLAGS  -ffat-lto-objects -flto -ffunction-sections -fno-semantic-interposition -O3 "
+export CFLAGS="$CFLAGS  -ffat-lto-objects -flto=16 -ffunction-sections -fno-semantic-interposition -O3 -falign-functions=16 -falign-loops=16"
+export CXXFLAGS="$CXXFLAGS  -ffat-lto-objects -flto=16 -ffunction-sections -fno-semantic-interposition -O3 "
 
 # build a temporal httpd with pgo generation enabled
 mkdir tmp; pushd tmp
