@@ -1,7 +1,7 @@
 %define mpms worker prefork
 Name     : httpd
 Version  : 2.4.29
-Release  : 88
+Release  : 89
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.29.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.29.tar.gz
 Source1  : httpd.service
@@ -214,9 +214,12 @@ mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/tmpfiles.d/httpd.conf
 mkdir -p %{buildroot}/usr/share/defaults/httpd/conf.modules.d
 install -m 0644 %{SOURCE3} %{buildroot}/usr/share/defaults/httpd/conf.modules.d/systemd.conf
+mkdir -p %{buildroot}/usr/share/clr-service-restart
+ln -sf /usr/lib/systemd/system/httpd.service %{buildroot}/usr/share/clr-service-restart/httpd.service
 
 # move webroot stuff out of /var, we'll set it up with webroot-setup.service
 mv %{buildroot}/var/www %{buildroot}/usr/share/httpd
+
 
 %files
 %defattr(-,root,root,-)
@@ -246,6 +249,7 @@ mv %{buildroot}/var/www %{buildroot}/usr/share/httpd
 %exclude /usr/share/defaults/httpd/original/httpd.conf
 %exclude /usr/share/defaults/httpd/original/extra
 %exclude /usr/share/defaults/httpd/original/extra/*
+/usr/share/clr-service-restart/httpd.service
 /usr/share/defaults/httpd/*
 /usr/share/httpd/*
 
