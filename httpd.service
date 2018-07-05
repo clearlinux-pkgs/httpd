@@ -7,6 +7,7 @@ Requires=webroot-setup.service
 [Service]
 Type=notify
 Environment=LANG=C
+ExecStartPre=/usr/bin/cp -n /usr/share/httpd/html/index.html /var/www/html/
 ExecStart=/usr/sbin/httpd -DFOREGROUND -k start
 ExecStop=/usr/bin/kill -WINCH $MAINPID
 KillSignal=SIGWINCH

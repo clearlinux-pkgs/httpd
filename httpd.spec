@@ -7,6 +7,7 @@ Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.33.tar.gz
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Source3  : systemd.conf
+Source4  : webroot-setup.service
 Summary  : Apache HTTP Server
 Group    : Development/Tools
 License  : Apache-2.0
@@ -15,6 +16,7 @@ Requires: httpd-lib
 Requires: httpd-config
 Requires: httpd-data
 Requires: httpd-doc
+Requires: httpd-webroot
 BuildRequires : apr-dev
 BuildRequires : apr-util-dev
 BuildRequires : cmake
@@ -65,6 +67,13 @@ Group: Data
 
 %description data
 data components for the httpd package.
+
+%package webroot
+Summary: Web Root files for http server.
+Group: Data
+
+%description webroot
+Summary: Web Root files for http server.
 
 %package extras
 Summary: extra components for the httpd package.
@@ -210,6 +219,7 @@ done
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/httpd.service
+install -m 0644 %{SOURCE4} %{buildroot}/usr/lib/systemd/system/webroot-setup.service
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/tmpfiles.d/httpd.conf
 mkdir -p %{buildroot}/usr/share/defaults/httpd/conf.modules.d
@@ -251,7 +261,11 @@ mv %{buildroot}/var/www %{buildroot}/usr/share/httpd
 %exclude /usr/share/defaults/httpd/original/extra/*
 /usr/share/clr-service-restart/httpd.service
 /usr/share/defaults/httpd/*
+
+%files webroot
+%defattr(-,root,root,-)
 /usr/share/httpd/*
+/usr/lib/systemd/system/webroot-setup.service
 
 %files dev
 %defattr(-,root,root,-)
