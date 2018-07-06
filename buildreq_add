@@ -1,9 +1,0 @@
-apr-dev
-apr-util-dev
-cmake
-expat-dev
-openssl-dev
-pcre
-pcre-dev
-util-linux-dev
-nghttp2-dev

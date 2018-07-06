@@ -1,2 +1,0 @@
-mkdir -p %{buildroot}/usr/share/clr-service-restart
-ln -sf /usr/lib/systemd/system/httpd.service %{buildroot}/usr/share/clr-service-restart/httpd.service
