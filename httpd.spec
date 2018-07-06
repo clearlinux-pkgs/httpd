@@ -1,7 +1,7 @@
 %define mpms worker prefork
 Name     : httpd
 Version  : 2.4.33
-Release  : 94
+Release  : 95
 URL      : http://download.nextag.com/apache//httpd/httpd-2.4.33.tar.gz
 Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.33.tar.gz
 Source1  : httpd.service
