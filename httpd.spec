@@ -16,7 +16,6 @@ Requires: httpd-lib
 Requires: httpd-config
 Requires: httpd-data
 Requires: httpd-doc
-Requires: httpd-webroot
 BuildRequires : apr-dev
 BuildRequires : apr-util-dev
 BuildRequires : cmake
@@ -67,13 +66,6 @@ Group: Data
 
 %description data
 data components for the httpd package.
-
-%package webroot
-Summary: Web Root files for http server.
-Group: Data
-
-%description webroot
-Summary: Web Root files for http server.
 
 %package extras
 Summary: extra components for the httpd package.
@@ -261,9 +253,6 @@ mv %{buildroot}/var/www %{buildroot}/usr/share/httpd
 %exclude /usr/share/defaults/httpd/original/extra/*
 /usr/share/clr-service-restart/httpd.service
 /usr/share/defaults/httpd/*
-
-%files webroot
-%defattr(-,root,root,-)
 /usr/share/httpd/*
 /usr/lib/systemd/system/webroot-setup.service
 

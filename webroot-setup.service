@@ -6,7 +6,8 @@ ConditionPathExists=!/var/www/html
 [Service]
 Type=oneshot
 ExecStartPre=/usr/bin/mkdir -p /var/www/html
-ExecStart=/usr/bin/cp -r /usr/share/httpd/www/icons /usr/share/httpd/www/error /usr/share/httpd/www/cgi-bin /var/www/
+ExecStartPre=/usr/bin/cp -r /usr/share/httpd/www/icons /usr/share/httpd/www/error /usr/share/httpd/www/cgi-bin /var/www/
+ExecStart=/usr/bin/cp /usr/share/httpd/www/html/index.html /var/www/html/
 
 [Install]
 WantedBy=multi-user.target
