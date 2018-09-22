@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.34
+Version  : 2.4.35
 Release  : 97
-URL      : http://download.nextag.com/apache//httpd/httpd-2.4.34.tar.gz
-Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.34.tar.gz
+URL      : http://download.nextag.com/apache//httpd/httpd-2.4.35.tar.gz
+Source0  : http://download.nextag.com/apache//httpd/httpd-2.4.35.tar.gz
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Source3  : systemd.conf
@@ -103,7 +103,7 @@ Requires: httpd-config
 lib components for the httpd package.
 
 %prep
-%setup -q -n httpd-2.4.34
+%setup -q -n httpd-2.4.35
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
