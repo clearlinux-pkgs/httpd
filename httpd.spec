@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.37
+Version  : 2.4.38
 Release  : 100
-URL      : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.37.tar.gz
-Source0  : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.37.tar.gz
+URL      : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.38.tar.gz
+Source0  : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.38.tar.gz
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Source3  : systemd.conf
@@ -27,6 +27,7 @@ BuildRequires : util-linux-dev
 BuildRequires : zlib-dev
 BuildRequires : nghttp2-dev
 BuildRequires : systemd-dev
+BuildRequires : curl-dev
 
 Patch1: 0001-default-config.patch
 Patch2: 0002-do-not-crash-when-IncludeOptional-dir-is-not-existent.patch
@@ -103,7 +104,7 @@ Requires: httpd-config
 lib components for the httpd package.
 
 %prep
-%setup -q -n httpd-2.4.37
+%setup -q -n httpd-2.4.38
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
