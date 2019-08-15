@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.39
-Release  : 101
-URL      : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.39.tar.gz
-Source0  : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.39.tar.gz
+Version  : 2.4.41
+Release  : 102
+URL      : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.41.tar.gz
+Source0  : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.41.tar.gz
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Source3  : systemd.conf
@@ -30,13 +30,12 @@ BuildRequires : systemd-dev
 BuildRequires : curl-dev
 
 Patch1: 0001-default-config.patch
-Patch2: 0002-do-not-crash-when-IncludeOptional-dir-is-not-existent.patch
-Patch3: 0003-Look-fo-envvars-in-etc-httpd.patch
-Patch4: 0004-pgo-task.patch
-Patch5: wakeups.patch
-Patch6: detect-systemd.patch
-Patch7: mod_systemd.patch
-Patch8: 0008-Move-var-www-htdocs-to-var-www-html-to-unify-with-ng.patch
+Patch2: 0003-Look-fo-envvars-in-etc-httpd.patch
+Patch3: 0004-pgo-task.patch
+Patch4: wakeups.patch
+Patch5: detect-systemd.patch
+Patch6: mod_systemd.patch
+Patch7: 0008-Move-var-www-htdocs-to-var-www-html-to-unify-with-ng.patch
 
 %description
 Apache is a powerful, full-featured, efficient, and freely-available
@@ -104,7 +103,7 @@ Requires: httpd-config
 lib components for the httpd package.
 
 %prep
-%setup -q -n httpd-2.4.39
+%setup -q -n httpd-2.4.41
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -112,7 +111,6 @@ lib components for the httpd package.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 
 export AR=gcc-ar
 export NM=gcc-nm
