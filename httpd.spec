@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.41
-Release  : 102
-URL      : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.41.tar.gz
-Source0  : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.41.tar.gz
+Version  : 2.4.43
+Release  : 103
+URL      : https://mirrors.ocf.berkeley.edu/apache//httpd/httpd-2.4.43.tar.bz2
+Source0  : https://mirrors.ocf.berkeley.edu/apache//httpd/httpd-2.4.43.tar.bz2
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Source3  : systemd.conf
@@ -33,9 +33,7 @@ Patch1: 0001-default-config.patch
 Patch2: 0003-Look-fo-envvars-in-etc-httpd.patch
 Patch3: 0004-pgo-task.patch
 Patch4: wakeups.patch
-Patch5: detect-systemd.patch
-Patch6: mod_systemd.patch
-Patch7: 0008-Move-var-www-htdocs-to-var-www-html-to-unify-with-ng.patch
+Patch5: 0008-Move-var-www-htdocs-to-var-www-html-to-unify-with-ng.patch
 
 %description
 Apache is a powerful, full-featured, efficient, and freely-available
@@ -103,14 +101,12 @@ Requires: httpd-config
 lib components for the httpd package.
 
 %prep
-%setup -q -n httpd-2.4.41
+%setup -q -n httpd-2.4.43
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
 
 export AR=gcc-ar
 export NM=gcc-nm
@@ -127,6 +123,7 @@ mkdir tmp; pushd tmp
 	--enable-fcgid \
 	--enable-pie \
 	--enable-http2 \
+	--enable-systemd \
 	--with-pcre=yes \
 	--with-port=8088 \
 	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin
@@ -169,6 +166,7 @@ mkdir $mpm; pushd $mpm
 	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin \
 	--with-mpm=$mpm \
 	--enable-so \
+	--enable-systemd \
 	--enable-fcgid \
 	--enable-http2 \
 	--enable-mods-shared="all authz_core auth_basic access_compat alias autoindex dir env filter headers mime reqtimeout status setenvif unixd pie fcgi http2" \
@@ -189,6 +187,7 @@ mpmbuild prefork \
 	--enable-cache \
 	--enable-disk-cache \
 	--enable-http2 \
+	--enable-systemd \
 	--enable-authn-anon --enable-authn-alias \
 	--disable-imagemap
 
