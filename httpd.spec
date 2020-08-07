@@ -117,7 +117,7 @@ export CXXFLAGS="$CXXFLAGS  -ffat-lto-objects -flto=16 -ffunction-sections -fno-
 # build a temporal httpd with pgo generation enabled
 mkdir tmp; pushd tmp
 ../configure \
-	--prefix=%{buildroot}%{_prefix} \
+	--prefix=%{buildroot}/usr \
 	--with-mpm=event \
 	--enable-mods-shared=all \
 	--enable-fcgid \
@@ -126,16 +126,16 @@ mkdir tmp; pushd tmp
 	--enable-systemd \
 	--with-pcre=yes \
 	--with-port=8088 \
-	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin
+	--with-apr=/usr/bin/apr-1-config --with-apr-util=/usr/bin
 
 make enable-pgo-flags V=1 %{?_smp_mflags}
 make DESTDIR=%{buildroot} install
-ln -s %{buildroot}%{buildroot}%{_prefix} %{buildroot}%{_prefix}
+ln -s %{buildroot}%{buildroot}/usr %{buildroot}/usr
 make DESTDIR=%{buildroot} pgo-generate
 popd
 
 rm -rf %{buildroot}%{buildroot}
-rm -rf %{buildroot}%{_prefix}
+rm -rf %{buildroot}/usr
 rm -rf tmp
 
 %build
@@ -156,14 +156,14 @@ function mpmbuild()
 mpm=$1; shift
 mkdir $mpm; pushd $mpm
 ../configure \
-	--prefix=%{_prefix} \
+	--prefix=/usr \
 	--sysconfdir=/usr/share/defaults/httpd \
-	--mandir=%{_mandir} \
+	--mandir=/usr/share/man \
 	--datadir=/var/www \
-	--includedir=%{_includedir}/httpd \
-	--libdir=%{_prefix}/lib \
-	--libexecdir=%{_prefix}/lib/httpd/modules \
-	--with-apr=%{_prefix}/bin/apr-1-config --with-apr-util=%{_prefix}/bin \
+	--includedir=/usr/include/httpd \
+	--libdir=/usr/lib \
+	--libexecdir=/usr/lib/httpd/modules \
+	--with-apr=/usr/bin/apr-1-config --with-apr-util=/usr/bin \
 	--with-mpm=$mpm \
 	--enable-so \
 	--enable-systemd \
@@ -196,7 +196,7 @@ mpmbuild event
 mpmbuild worker
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf ${buildroot}
 
 pushd event
 make DESTDIR=%{buildroot} install
@@ -204,7 +204,7 @@ popd
 
 # install alternative MPMs
 for f in %{mpms}; do
-	install -m 755 ${f}/httpd %{buildroot}%{_bindir}/httpd.${f}
+	install -m 755 ${f}/httpd %{buildroot}/usr/bin/httpd.${f}
 done
 
 mkdir -p %{buildroot}/usr/lib/systemd/system
@@ -223,7 +223,7 @@ mv %{buildroot}/var/www %{buildroot}/usr/share/httpd
 
 %files
 %defattr(-,root,root,-)
-%{_prefix}/lib/httpd/modules/httpd.exp
+/usr/lib/httpd/modules/httpd.exp
 
 %files bin
 %defattr(-,root,root,-)
@@ -240,8 +240,8 @@ mv %{buildroot}/var/www %{buildroot}/usr/share/httpd
 
 %files config
 %defattr(-,root,root,-)
-%{_prefix}/lib/systemd/system/httpd.service
-%{_prefix}/lib/tmpfiles.d/httpd.conf
+/usr/lib/systemd/system/httpd.service
+/usr/lib/tmpfiles.d/httpd.conf
 
 %files data
 %defattr(-,root,root,-)
@@ -256,7 +256,7 @@ mv %{buildroot}/var/www %{buildroot}/usr/share/httpd
 
 %files dev
 %defattr(-,root,root,-)
-%{_prefix}/include/httpd/*.h
+/usr/include/httpd/*.h
 
 %files doc
 %defattr(-,root,root,-)
@@ -265,4 +265,4 @@ mv %{buildroot}/var/www %{buildroot}/usr/share/httpd
 
 %files lib
 %defattr(-,root,root,-)
-%{_prefix}/lib/httpd/modules/mod*.so
+/usr/lib/httpd/modules/mod*.so
