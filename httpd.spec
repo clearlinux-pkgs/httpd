@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.43
-Release  : 103
-URL      : https://mirrors.ocf.berkeley.edu/apache//httpd/httpd-2.4.43.tar.bz2
-Source0  : https://mirrors.ocf.berkeley.edu/apache//httpd/httpd-2.4.43.tar.bz2
+Version  : 2.4.46
+Release  : 104
+URL      : https://mirrors.ocf.berkeley.edu/apache//httpd/httpd-2.4.46.tar.bz2
+Source0  : https://mirrors.ocf.berkeley.edu/apache//httpd/httpd-2.4.46.tar.bz2
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Source3  : systemd.conf
@@ -101,7 +101,7 @@ Requires: httpd-config
 lib components for the httpd package.
 
 %prep
-%setup -q -n httpd-2.4.43
+%setup -q
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
