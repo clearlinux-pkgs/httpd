@@ -1,14 +1,14 @@
-From fd3728bba2e3ed292819039cfb056c2cc9d0f7dd Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: David Esparza Borquez <david.esparza.borquez@intel.com>
 Date: Mon, 29 Feb 2016 17:40:40 -0600
 Subject: [PATCH] pgo feature update
 
 ---
- Makefile.in | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Makefile.in | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 66 insertions(+)
 
 diff --git a/Makefile.in b/Makefile.in
-index c1b08f9..be5d57b 100644
+index 9ae3c97..ec3f4bc 100644
 --- a/Makefile.in
 +++ b/Makefile.in
 @@ -26,6 +26,20 @@ DISTCLEAN_TARGETS  = include/ap_config_auto.h include/ap_config_layout.h \
@@ -32,7 +32,7 @@ index c1b08f9..be5d57b 100644
  include $(top_builddir)/build/rules.mk
  include $(top_srcdir)/build/program.mk
  
-@@ -273,3 +287,55 @@ x-local-distclean:
+@@ -315,3 +329,55 @@ x-local-distclean:
  
  # XXX: This looks awfully platform-specific [read: bad form and style]
  include $(top_srcdir)/os/os2/core.mk
@@ -88,6 +88,3 @@ index c1b08f9..be5d57b 100644
 +	$(MAKE) pgo-httpdconf-update
 +	$(MAKE) pgo-testing-files-gen
 +	$(MAKE) pgo-run_benchmark
--- 
-2.7.2
-

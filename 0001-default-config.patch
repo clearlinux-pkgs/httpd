@@ -1,4 +1,4 @@
-From edf937e16e3dd6a7720656f456e9cb2bc303155d Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: "Munoz, Obed N" <obed.n.munoz@intel.com>
 Date: Mon, 1 Aug 2016 11:13:01 -0500
 Subject: [PATCH] default config
@@ -9,7 +9,7 @@ Signed-off-by: Munoz, Obed N <obed.n.munoz@intel.com>
  1 file changed, 14 insertions(+), 5 deletions(-)
 
 diff --git a/docs/conf/httpd.conf.in b/docs/conf/httpd.conf.in
-index 966d2c3..113854d 100644
+index 37d7c0b..87d002d 100644
 --- a/docs/conf/httpd.conf.in
 +++ b/docs/conf/httpd.conf.in
 @@ -65,6 +65,8 @@ Listen @@Port@@
@@ -57,7 +57,7 @@ index 966d2c3..113854d 100644
  </IfModule>
  
  <IfModule alias_module>
-@@ -407,3 +409,10 @@ SSLRandomSeed startup builtin
+@@ -416,3 +418,10 @@ SSLRandomSeed startup builtin
  SSLRandomSeed connect builtin
  </IfModule>
  
@@ -68,6 +68,3 @@ index 966d2c3..113854d 100644
 +IncludeOptional /usr/share/defaults/httpd/conf.modules.d/*.conf
 +
 +PidFile /run/httpd/httpd.pid
--- 
-2.9.0
-

@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.46
-Release  : 104
-URL      : https://mirrors.ocf.berkeley.edu/apache//httpd/httpd-2.4.46.tar.bz2
-Source0  : https://mirrors.ocf.berkeley.edu/apache//httpd/httpd-2.4.46.tar.bz2
+Version  : 2.4.47
+Release  : 105
+URL      : https://mirrors.ocf.berkeley.edu/apache//httpd/httpd-2.4.47.tar.bz2
+Source0  : https://mirrors.ocf.berkeley.edu/apache//httpd/httpd-2.4.47.tar.bz2
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Source3  : systemd.conf
@@ -30,10 +30,10 @@ BuildRequires : systemd-dev
 BuildRequires : curl-dev
 
 Patch1: 0001-default-config.patch
-Patch2: 0003-Look-fo-envvars-in-etc-httpd.patch
-Patch3: 0004-pgo-task.patch
-Patch4: wakeups.patch
-Patch5: 0008-Move-var-www-htdocs-to-var-www-html-to-unify-with-ng.patch
+Patch2: 0002-Look-for-envvars-in-etc-httpd.patch
+Patch3: 0003-pgo-feature-update.patch
+Patch4: 0004-reduce-wakeups.patch
+Patch5: 0005-Move-var-www-htdocs-to-var-www-html-to-unify-with-ng.patch
 
 %description
 Apache is a powerful, full-featured, efficient, and freely-available
@@ -108,6 +108,12 @@ lib components for the httpd package.
 %patch4 -p1
 %patch5 -p1
 
+%build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+export LANG=C.UTF-8
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export NM=gcc-nm
 export RANLIB=gcc-ranlib
@@ -138,7 +144,6 @@ rm -rf %{buildroot}%{buildroot}
 rm -rf %{buildroot}/usr
 rm -rf tmp
 
-%build
 # forcibly prevent use of bundled apr, apr-util, pcre
 rm -rf srclib/{apr,apr-util,pcre}
 

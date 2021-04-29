@@ -1,7 +1,7 @@
-From 76a27cae0e6951a7b6b25d25307cd952879c3fd7 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Alberto Murillo <alberto.murillo.silva@intel.com>
 Date: Wed, 22 Apr 2015 11:17:51 -0500
-Subject: [PATCH] Look fo envvars in /etc/httpd
+Subject: [PATCH] Look for envvars in /etc/httpd
 
 ---
  support/apachectl.in | 4 ++--
@@ -22,6 +22,3 @@ index 3281c2e..52eb9dc 100644
  fi
  #
  # a command that outputs a formatted text version of the HTML at the
--- 
-2.1.0
-

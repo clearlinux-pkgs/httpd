@@ -1,5 +1,14 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Thu, 24 Mar 2016 13:46:27 +0000
+Subject: [PATCH] reduce wakeups
+
+---
+ server/mpm_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/server/mpm_common.c b/server/mpm_common.c
-index 04f36d9db8..5e42815ebe 100644
+index 04f36d9..5e42815 100644
 --- a/server/mpm_common.c
 +++ b/server/mpm_common.c
 @@ -198,7 +198,7 @@ AP_DECLARE(void) ap_wait_or_timeout(apr_exit_why_e *status, int *exitcode,
