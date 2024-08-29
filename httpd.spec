@@ -1,9 +1,9 @@
 %define mpms worker prefork
 Name     : httpd
-Version  : 2.4.61
+Version  : 2.4.62
 Release  : 108
-URL      : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.61.tar.bz2
-Source0  : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.61.tar.bz2
+URL      : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.62.tar.bz2
+Source0  : https://mirrors.ocf.berkeley.edu/apache/httpd/httpd-2.4.62.tar.bz2
 Source1  : httpd.service
 Source2  : httpd.tmpfiles
 Source3  : systemd.conf
